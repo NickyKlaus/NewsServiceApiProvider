@@ -1,0 +1,73 @@
+swagger: "2.0"
+host: localhost:5005
+basePath: /
+schemes:
+  - http
+
+paths:
+  /:
+    get:
+      description: Provide news by the keyword
+      parameters:
+        - name: term
+          in: query
+          type: string
+          description: Keyword
+        - name: page
+          in: query
+          type: integer
+          description: Page number
+      produces:
+        - application/json
+      responses:
+        200:
+          description: Success
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Status
+              totalResults:
+                type: integer
+                description: Total number of results
+              articles:
+                type: array
+                description: News
+                items:
+                  type: object
+                  description: Article
+                  properties:
+                    source:
+                      type: object
+                      description: Source of the article
+                      properties:
+                        id:
+                          type: string
+                          description: Identifier
+                        name:
+                          type: string
+                          description: Name
+                    author:
+                      type: string
+                      description: Author of the article
+                    title:
+                      type: string
+                      description: Article title
+                    description:
+                      type: string
+                      description: Article content
+                    url:
+                      type: string
+                      description: News provider URL
+                      format: uri
+                    urlToImage:
+                      type: string
+                      description: Image source URL
+                      format: uri
+                    datePublished:
+                      type: string
+                      description: Article publishing date
+                    content:
+                      type: string
+                      description: Article content

@@ -1,0 +1,106 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "News service",
+    "description": "News Service provides news from public sources",
+    "contact": {
+      "name": "Nicky Klaus",
+      "url": "https://github.com/NickyKlaus"
+    },
+    "version": "1.0.0"
+  },
+  "schemes": [
+    "http", "https"
+  ],
+  "host": "127.0.0.1",
+  "paths": {
+    "/news": {
+      "get": {
+        "description": "Returns all news",
+        "produces": ["application/json"],
+        "summary": "Get news",
+        "responses": {
+          "200": {
+            "description": "A list of news",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Article"
+              }
+            }
+          },
+          "404": {
+            "description": "News not found"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Source": {
+      "description": "New's article source",
+      "type": "object",
+      "properties" : {
+        "id": {
+          "description": "Source identifier",
+          "type": "string",
+          "example": "i1243Uiwewe23145"
+        },
+        "name": {
+          "description": "Source name",
+          "type": "string",
+          "example": "Web Gallery of Art"
+        }
+      },
+      "additionalProperties": false
+    },
+    "Article": {
+      "type": "object",
+      "properties": {
+        "author": {
+          "description": "Author of new's article",
+          "type": "string",
+          "example": "Web Gallery of Art"
+        },
+        "title": {
+          "description": "Title of new's article",
+          "type": "string",
+          "example": "Mona Lisa (La Gioconda)"
+        },
+        "description": {
+          "description": "Description of new's article",
+          "type": "string",
+          "example": "c. 1503-5\nOil on panel, 77 x 53 cm\nMusée du Louvre, Paris"
+        },
+        "url": {
+          "description": "New's article source url",
+          "type": "string",
+          "format": "uri",
+          "example": "https://www.wga.hu/frames-e.html?/html/l/leonardo/04/0monalis.html"
+        },
+        "urlToImage": {
+          "description": "New's article image url",
+          "type": "string",
+          "format": "uri",
+          "example": "https://www.wga.hu/support/viewer/z.html"
+        },
+        "datePublished": {
+          "description": "New's article publishing date",
+          "type": "string",
+          "example": "2017-04-20T10:02:32.930Z"
+        },
+        "content": {
+          "description": "New's article content",
+          "type": "string",
+          "example": "According to Vasari, this picture is a portrait of Mona or Monna (short for Madonna) Lisa"
+        },
+        "source": {
+          "type": "object",
+          "$ref": "#/definitions/Source",
+          "description": "New's article source"
+        }
+      },
+      "additionalProperties": false
+    }
+  }
+}
