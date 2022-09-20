@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_restful import Resource, Api
-from flasgger import Swagger, LazyJSONEncoder, swag_from
+from flasgger import Swagger, LazyJSONEncoder
 from webargs import fields
 from webargs.flaskparser import use_args
 from newsapi import NewsApiClient
@@ -24,12 +24,16 @@ swagger_config = {
     "specs_route": "/apidocs/"
 }
 
+app.config['SWAGGER'] = {
+    "openapi": "3.0.2"
+}
+
 swagger = Swagger(app, template_file="news_provider_schema.json", config=swagger_config)
 
 
 class News(Resource):
     # add you api key before using
-    __base_url = '''https://newsapi.org/v2/everything?q={}&sortBy=publishedAt&apiKey='''
+    # '''https://newsapi.org/v2/everything?q={}&sortBy=publishedAt&apiKey='''
 
     @use_args(
         {
@@ -38,7 +42,6 @@ class News(Resource):
         },
         location='querystring'
     )
-    @swag_from("news_provider_schema.yaml", methods=['GET'])
     def get(self, args):
         if args['term'] == '_exit':
             exit()
@@ -55,7 +58,7 @@ class News(Resource):
         return news.get('articles') if news.get('totalResults') > 0 else []
 
 
-api.add_resource(News, '/')
+api.add_resource(News, '/news')
 
 if __name__ == '__main__':
-    app.run(host='localhost', port=5005, debug=True)
+    app.run(host='localhost', port=5008, debug=True)
